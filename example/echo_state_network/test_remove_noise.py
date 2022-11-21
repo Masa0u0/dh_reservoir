@@ -16,20 +16,20 @@ from dh_reservoir.echo_state_network import EchoStateNetwork
 from dh_reservoir.echo_state_network.network_maker import uniform
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     parser = ArgumentParser()
-    parser.add_argument("--dt", type=float, default=1e-3)
-    parser.add_argument("--train_time", type=float, default=8.)
-    parser.add_argument("--test_time", type=float, default=3.)
-    parser.add_argument("--plot_time", type=float)
-    parser.add_argument("--start_time", type=float, default=0.5)
-    parser.add_argument("--freq", type=float, default=1.)
-    parser.add_argument("--delay_range", type=float, nargs=2, default=(0., 3.))
-    parser.add_argument("--noise_scale", type=float, default=0.)
-    parser.add_argument("--num_plot", type=int, default=10**10)
-    parser.add_argument("--seed", type=int)
-    parser.add_argument("--plot", action="store_true")
-    parser.add_argument("--config", type=str)
+    parser.add_argument('--dt', type=float, default=1e-3)
+    parser.add_argument('--train_time', type=float, default=8.)
+    parser.add_argument('--test_time', type=float, default=3.)
+    parser.add_argument('--plot_time', type=float)
+    parser.add_argument('--start_time', type=float, default=0.5)
+    parser.add_argument('--freq', type=float, default=1.)
+    parser.add_argument('--delay_range', type=float, nargs=2, default=(0., 3.))
+    parser.add_argument('--noise_scale', type=float, default=0.)
+    parser.add_argument('--num_plot', type=int, default=10**10)
+    parser.add_argument('--seed', type=int)
+    parser.add_argument('--plot', action='store_true')
+    parser.add_argument('--config', type=str)
     parser.add_argument('--load_path', type=str)
     parser.add_argument('--save_dir', type=str)
     args = parser.parse_args()
@@ -43,7 +43,7 @@ if __name__ == "__main__":
     np.random.seed(args.seed)
 
     if args.config:
-        with open(args.config, "r") as f:
+        with open(args.config, 'r') as f:
             config = yaml.load(f, Loader=yaml.SafeLoader)
         input_, output, feedback, reservoir = uniform(**config['layer'])
         esn = EchoStateNetwork(
@@ -134,9 +134,9 @@ if __name__ == "__main__":
     # モデル保存
     if args.save_dir:
         os.makedirs(args.save_dir, exist_ok=True)
-        with open(osp.join(args.save_dir, "config.json"), "w") as f:
+        with open(osp.join(args.save_dir, 'config.json'), 'w') as f:
             json.dump(config, f, indent=4)
-        esn.save(osp.join(args.save_dir, "esn.pkl"))
+        esn.save(osp.join(args.save_dir, 'esn.pkl'))
 
     # 描画
     if args.plot:
@@ -151,7 +151,7 @@ if __name__ == "__main__":
             lim = max(1., args.noise_scale)
             ax.set_ylim(-lim, lim)
             if i == num_plot - 1:
-                ax.set_xlabel("Time [s]")
+                ax.set_xlabel('Time [s]')
 
         # 出力信号
         fig = plt.figure()
@@ -161,6 +161,6 @@ if __name__ == "__main__":
             ax.plot(t_array, target_buf[i, :])
             ax.set_ylim(-1, 1)
             if i == num_plot - 1:
-                ax.set_xlabel("Time [s]")
+                ax.set_xlabel('Time [s]')
 
         plt.show()

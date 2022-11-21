@@ -11,7 +11,7 @@ from dh_reservoir.echo_state_network.network_maker import uniform
 if __name__ == '__main__':
     parser = ArgumentParser()
     parser.add_argument('--config', type=str, required=True)
-    parser.add_argument("--dt", type=float, default=1e-3)
+    parser.add_argument('--dt', type=float, default=1e-3)
     parser.add_argument('--sim_time', type=float, default=10.)
     parser.add_argument('--trans_time', type=float, default=1.)
     parser.add_argument('--freq', type=float, default=1.)

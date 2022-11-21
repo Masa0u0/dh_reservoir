@@ -10,14 +10,14 @@ from dh_reservoir.echo_state_network.data_generator import NARMA
 
 if __name__ == '__main__':
     parser = ArgumentParser()
-    parser.add_argument("--N_x", type=int, default=50)
-    parser.add_argument("--input_scale", type=float, default=0.1)
-    parser.add_argument("--fb_scale", type=float, default=0.1)
-    parser.add_argument("--indegree", type=float, default=7.5)  # N_x=50でdensity=0.15となるように設定
-    parser.add_argument("--rho", type=float, default=0.9)
-    parser.add_argument("--order", type=int, default=10, help='NARMAモデルの次数')
-    parser.add_argument("--data_length_train", type=int, default=900, help='訓練用のデータ長')
-    parser.add_argument("--data_length_test", type=int, default=900, help='評価用のデータ長')
+    parser.add_argument('--N_x', type=int, default=50)
+    parser.add_argument('--input_scale', type=float, default=0.1)
+    parser.add_argument('--fb_scale', type=float, default=0.1)
+    parser.add_argument('--indegree', type=float, default=7.5)  # N_x=50でdensity=0.15となるように設定
+    parser.add_argument('--rho', type=float, default=0.9)
+    parser.add_argument('--order', type=int, default=10, help='NARMAモデルの次数')
+    parser.add_argument('--data_length_train', type=int, default=900, help='訓練用のデータ長')
+    parser.add_argument('--data_length_test', type=int, default=900, help='評価用のデータ長')
     args = parser.parse_args()
 
     # データ生成
@@ -60,10 +60,10 @@ if __name__ == '__main__':
     test_Y = esn.predict(test_U)
 
     # 評価（テスト誤差RMSE, NRMSE）
-    RMSE = np.sqrt(((test_D - test_Y) ** 2).mean())
-    NRMSE = RMSE/np.sqrt(np.var(test_D))
-    print('RMSE =', RMSE)
-    print('NRMSE =', NRMSE)
+    rmse = np.sqrt(((test_D - test_Y) ** 2).mean())
+    nrmse = rmse/np.sqrt(np.var(test_D))
+    print('RMSE =', rmse)
+    print('NRMSE =', nrmse)
 
     # グラフ表示用データ
     T_disp = (-100, 100)

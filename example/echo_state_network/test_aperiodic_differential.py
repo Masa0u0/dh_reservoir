@@ -14,19 +14,19 @@ from dh_function.metrics import root_mean_squared_error
 from dh_reservoir.echo_state_network import EchoStateNetwork
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument("--dt", type=float, default=0.001)
-    parser.add_argument("--sim_time", type=float, default=10.)
-    parser.add_argument("--plot_time", type=float)
-    parser.add_argument("--start_time", type=float, default=0.5)
-    parser.add_argument("--freq_range", type=float, nargs=2, default=(1., 10.))
-    parser.add_argument("--delay_range", type=float, nargs=2, default=(0., 3.))
-    parser.add_argument("--noise_scale", type=float, default=0.)
-    parser.add_argument("--num_plot", type=int, default=10**10)
-    parser.add_argument("--seed", type=int)
-    parser.add_argument("--plot", action="store_true")
-    parser.add_argument("--config", type=str)
+    parser.add_argument('--dt', type=float, default=0.001)
+    parser.add_argument('--sim_time', type=float, default=10.)
+    parser.add_argument('--plot_time', type=float)
+    parser.add_argument('--start_time', type=float, default=0.5)
+    parser.add_argument('--freq_range', type=float, nargs=2, default=(1., 10.))
+    parser.add_argument('--delay_range', type=float, nargs=2, default=(0., 3.))
+    parser.add_argument('--noise_scale', type=float, default=0.)
+    parser.add_argument('--num_plot', type=int, default=10**10)
+    parser.add_argument('--seed', type=int)
+    parser.add_argument('--plot', action='store_true')
+    parser.add_argument('--config', type=str)
     parser.add_argument('--load_path', type=str)
     parser.add_argument('--save_path', type=str)
     args = parser.parse_args()
@@ -38,7 +38,7 @@ if __name__ == "__main__":
     np.random.seed(args.seed)
 
     if args.config:
-        with open(args.config, "r") as f:
+        with open(args.config, 'r') as f:
             config = yaml.load(f, Loader=yaml.SafeLoader)
 
     if args.load_path:
@@ -123,7 +123,7 @@ if __name__ == "__main__":
 
         # 入力信号
         fig = plt.figure()
-        plt.title("Input")
+        plt.title('Input')
         for i in range(num_plot):
             ax = fig.add_subplot(num_plot, 1, i + 1)
             ax.plot(t_array, obs_buf[i, :])
@@ -131,16 +131,16 @@ if __name__ == "__main__":
             ax.set_ylim(-lim, lim)
             ax.text(-0.15, 0.5, f'{freq[i]:.1f}Hz', transform=ax.transAxes)
             if i == num_plot - 1:
-                ax.set_xlabel("Time [s]")
+                ax.set_xlabel('Time [s]')
 
         # 出力信号
         fig = plt.figure()
-        plt.title("Target")
+        plt.title('Target')
         for i in range(num_plot):
             ax = fig.add_subplot(num_plot, 1, i + 1)
             ax.plot(t_array, target_buf[i, :])
             ax.text(-0.15, 0.5, f'{freq[i]:.1f}Hz', transform=ax.transAxes)
             if i == num_plot - 1:
-                ax.set_xlabel("Time [s]")
+                ax.set_xlabel('Time [s]')
 
         plt.show()

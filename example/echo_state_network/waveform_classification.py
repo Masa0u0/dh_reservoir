@@ -14,7 +14,7 @@ from dh_reservoir.echo_state_network.data_generator import SinSaw
 
 
 class ScalingShift:
-    """ 出力のスケーリング """
+    ''' 出力のスケーリング '''
 
     def __init__(self, scale, shift):
         '''
@@ -35,11 +35,11 @@ class ScalingShift:
 
 if __name__ == '__main__':
     parser = ArgumentParser()
-    parser.add_argument("--dt", type=float, default=1e-3)
+    parser.add_argument('--dt', type=float, default=1e-3)
     parser.add_argument('--n_wave_train', type=int, default=60)
     parser.add_argument('--n_wave_test', type=int, default=40)
     parser.add_argument('--n_wave_plot', type=int, default=10)
-    parser.add_argument("--freq", type=float, default=10.)
+    parser.add_argument('--freq', type=float, default=10.)
     parser.add_argument('--seed', type=int)
     parser.add_argument('--config', type=str)
     parser.add_argument('--load_path', type=str)
@@ -73,7 +73,7 @@ if __name__ == '__main__':
 
     # ESNモデル
     if args.config:
-        with open(args.config, "r") as f:
+        with open(args.config, 'r') as f:
             config = yaml.load(f, Loader=yaml.SafeLoader)
         input_, output, feedback, reservoir = uniform(**config['layer'])
         esn = EchoStateNetwork(
@@ -109,9 +109,9 @@ if __name__ == '__main__':
     # モデル保存
     if args.save_dir:
         os.makedirs(args.save_dir, exist_ok=True)
-        with open(osp.join(args.save_dir, "config.json"), "w") as f:
+        with open(osp.join(args.save_dir, 'config.json'), 'w') as f:
             json.dump(config, f, indent=4)
-        esn.save(osp.join(args.save_dir, "esn.pkl"))
+        esn.save(osp.join(args.save_dir, 'esn.pkl'))
 
     # グラフ表示用データ
     plot_length = dynamics.period_length * args.n_wave_plot

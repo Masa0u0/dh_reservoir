@@ -89,7 +89,7 @@ class EchoStateNetwork:
         return: 学習前のモデル出力, データ長×N_y
         '''
         assert U.ndim == D.ndim == 2
-        assert U.shape[0] == D.shape[0]
+        assert U.shape[0] == D.shape[0], f'U.shape: {U.shape}, D.shape: {D.shape}'
         assert U.shape[1] == self.N_u and D.shape[1] == self.N_y
 
         train_len = len(U)
