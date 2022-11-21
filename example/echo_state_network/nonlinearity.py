@@ -5,7 +5,7 @@ import yaml
 from argparse import ArgumentParser
 from tqdm import tqdm
 
-from dh_snnkit.echo_state_network.network_maker import uniform
+from dh_reservoir.echo_state_network.network_maker import uniform
 
 
 if __name__ == '__main__':

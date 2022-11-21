@@ -8,8 +8,8 @@ from tqdm import tqdm
 from time import time
 from rich import print
 
-from dh_snnkit.liquid_state_machine import LiquidStateMachine
-from dh_snnkit.liquid_state_machine.network_maker import ponghiran2019, klampfl2013
+from dh_reservoir.liquid_state_machine import LiquidStateMachine
+from dh_reservoir.liquid_state_machine.network_maker import ponghiran2019, klampfl2013
 
 
 network_maker_dict = {

@@ -18,9 +18,9 @@ from rich import print
 
 from dh_function.basic import deep_connect
 from dh_function.metrics import cross_entropy_error
-from dh_snnkit.encoder import LIFEncoder
-from dh_snnkit.liquid_state_machine import LiquidStateMachine
-from dh_snnkit.liquid_state_machine.network_maker import ponghiran2019, klampfl2013
+from dh_reservoir.encoder import LIFEncoder
+from dh_reservoir.liquid_state_machine import LiquidStateMachine
+from dh_reservoir.liquid_state_machine.network_maker import ponghiran2019, klampfl2013
 
 
 global config, db_id, obs_dim, num_rsrvr, num_class, num_iter

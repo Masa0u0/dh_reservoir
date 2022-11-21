@@ -6,8 +6,8 @@ from rich import print
 from tqdm import tqdm
 from time import time
 
-from dh_snnkit.ext_lsm import LiquidStateMachine, NeuronParams, SynapseParams
-from dh_snnkit.encoder import PoissonEncoder
+from dh_reservoir.ext_lsm import LiquidStateMachine, NeuronParams, SynapseParams
+from dh_reservoir.encoder import PoissonEncoder
 
 
 if __name__ == "__main__":

@@ -30,7 +30,7 @@ ext_modules = [
 ]
 
 setup(
-    name="dh_snnkit",
+    name="dh_reservoir",
     version="0.0.0",
     author="dohi",
     packages=find_packages(where="lib"),   # lib内の全てをパッケージとみなす(libをルートとする)

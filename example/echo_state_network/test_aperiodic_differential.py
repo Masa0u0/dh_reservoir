@@ -11,7 +11,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import r2_score
 
 from dh_function.metrics import root_mean_squared_error
-from dh_snnkit.echo_state_network import EchoStateNetwork
+from dh_reservoir.echo_state_network import EchoStateNetwork
 
 
 if __name__ == "__main__":

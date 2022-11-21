@@ -7,9 +7,9 @@ import numpy.linalg as LA
 import matplotlib.pyplot as plt
 from argparse import ArgumentParser
 
-from dh_snnkit.echo_state_network import EchoStateNetwork
-from dh_snnkit.echo_state_network.util import Tikhonov
-from dh_snnkit.echo_state_network.network_maker import uniform
+from dh_reservoir.echo_state_network import EchoStateNetwork
+from dh_reservoir.echo_state_network.util import Tikhonov
+from dh_reservoir.echo_state_network.network_maker import uniform
 
 
 class SinSaw:

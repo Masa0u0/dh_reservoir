@@ -1,4 +1,4 @@
-# dh_snnkit
+# dh_reservoir
 
 
 ## Install
@@ -14,7 +14,7 @@ $ pip install -e .
 ---
 - example/に移動する
 ```bash
-$ cd .../dh_snnkit/example/liquid_state_machine
+$ cd .../dh_reservoir/example/liquid_state_machine
 ```
 
 - 下記のようなconfigを作成する
