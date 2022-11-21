@@ -2,62 +2,6 @@
 
 using namespace std;
 
-LSMParam::LSMParam(
-  int num_input,
-  int num_rsrvr,
-  int num_syn_input,
-  int num_syn_rsrvr,
-  double tau_m,
-  double v_th,
-  double v_rest,
-  double v_reset,
-  double i_back,
-  double i_noise_scale,
-  double r,
-  const vector<bool>& is_exc_input,
-  const vector<bool>& is_exc_rsrvr,
-  const vector<pair<int, int>>& pairs_input,
-  const vector<pair<int, int>>& pairs_rsrvr,
-  const vector<double>& t_ref,
-  const vector<double>& tau_decay,
-  const vector<double>& tau_syn_input,
-  const vector<double>& tau_syn_rsrvr,
-  const vector<double>& tau_d,
-  const vector<double>& tau_f,
-  const vector<double>& u0,
-  const vector<double>& a_input,
-  const vector<double>& a_rsrvr,
-  const vector<double>& delay_input,
-  const vector<double>& delay_rsrvr)
-  : num_input{ num_input },
-    num_rsrvr{ num_rsrvr },
-    num_syn_input{ num_syn_input },
-    num_syn_rsrvr{ num_syn_rsrvr },
-    tau_m{ tau_m },
-    v_th{ v_th },
-    v_rest{ v_rest },
-    v_reset{ v_reset },
-    i_back{ i_back },
-    i_noise_scale{ i_noise_scale },
-    r{ r },
-    is_exc_input{ is_exc_input },
-    is_exc_rsrvr{ is_exc_rsrvr },
-    pairs_input{ pairs_input },
-    pairs_rsrvr{ pairs_rsrvr },
-    t_ref{ t_ref },
-    tau_decay{ tau_decay },
-    tau_syn_input{ tau_syn_input },
-    tau_syn_rsrvr{ tau_syn_rsrvr },
-    tau_d{ tau_d },
-    tau_f{ tau_f },
-    u0{ u0 },
-    a_input{ a_input },
-    a_rsrvr{ a_rsrvr },
-    delay_input{ delay_input },
-    delay_rsrvr{ delay_rsrvr }
-{
-}
-
 LiquidStateMachine::LiquidStateMachine(const LSMParam& param, int seed = -1) : param{ param }
 {
   if (seed < 0)

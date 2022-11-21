@@ -31,34 +31,6 @@ struct LSMParam
   std::vector<double> a_rsrvr;
   std::vector<double> delay_input;
   std::vector<double> delay_rsrvr;
-
-  LSMParam(
-    int num_input,
-    int num_rsrvr,
-    int num_syn_input,
-    int num_syn_rsrvr,
-    double tau_m,
-    double v_th,
-    double v_rest,
-    double v_reset,
-    double i_back,
-    double i_noise_scale,
-    double r,
-    const std::vector<bool>& is_exc_input,
-    const std::vector<bool>& is_exc_rsrvr,
-    const std::vector<std::pair<int, int>>& pairs_input,
-    const std::vector<std::pair<int, int>>& pairs_rsrvr,
-    const std::vector<double>& t_ref,
-    const std::vector<double>& tau_decay,
-    const std::vector<double>& tau_syn_input,
-    const std::vector<double>& tau_syn_rsrvr,
-    const std::vector<double>& tau_d,
-    const std::vector<double>& tau_f,
-    const std::vector<double>& u0,
-    const std::vector<double>& a_input,
-    const std::vector<double>& a_rsrvr,
-    const std::vector<double>& delay_input,
-    const std::vector<double>& delay_rsrvr);
 };
 
 class LiquidStateMachine
