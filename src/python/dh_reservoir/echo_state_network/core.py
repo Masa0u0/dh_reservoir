@@ -1,5 +1,7 @@
-import numpy as np
 import pickle
+import numpy as np
+from numpy.typing import NDArray
+from typing import Tuple
 from tqdm import tqdm
 
 from .layer import Input, Output, Feedback, Reservoir
@@ -45,7 +47,7 @@ class EchoStateNetwork:
     def rsrvr_state(self):
         return self.Reservoir.get_state()
 
-    def step(self, u, dt):
+    def step(self, u: NDArray, dt: float = 1e+9) -> NDArray:
         x_in = self.Input(u)
 
         # フィードバック結合
@@ -60,11 +62,11 @@ class EchoStateNetwork:
         # リザバー状態ベクトル
         return self.Reservoir.step(x_in, dt)
 
-    def reset(self):
+    def reset(self) -> None:
         self.Reservoir.reset()
         self.y_prev *= 0.
 
-    def save(self, path: str):
+    def save(self, path: str) -> None:
         assert path.endswith('.pkl')
 
         data = {
@@ -78,7 +80,7 @@ class EchoStateNetwork:
             pickle.dump(data, f)
 
     # バッチ学習
-    def train(self, U, D, optimizer, dt, trans_len=None):
+    def train(self, U: NDArray, D: NDArray, optimizer, dt: float = 1e+9, trans_len: int = None) -> NDArray:
         '''
         U: 教師データの入力, データ長×N_u
         D: 教師データの出力, データ長×N_y
@@ -118,7 +120,7 @@ class EchoStateNetwork:
         return np.array(Y)
 
     # バッチ学習後の予測
-    def predict(self, U, dt):
+    def predict(self, U: NDArray, dt: float = 1e+9) -> NDArray:
         test_len = len(U)
         Y_pred = []
 
@@ -143,7 +145,7 @@ class EchoStateNetwork:
         return np.array(Y_pred)
 
     # バッチ学習後の予測（自律系のフリーラン）
-    def run(self, U, dt):
+    def run(self, U: NDArray, dt: float = 1e+9) -> NDArray:
         test_len = len(U)
         Y_pred = []
         y = U[0]
@@ -169,7 +171,7 @@ class EchoStateNetwork:
         return np.array(Y_pred)
 
     # オンライン学習と予測
-    def adapt(self, U, D, optimizer, dt):
+    def adapt(self, U: NDArray, D: NDArray, optimizer, dt: float = 1e+9) -> Tuple[NDArray, NDArray]:
         Y_pred = []
         Wout_abs_mean = []
 
