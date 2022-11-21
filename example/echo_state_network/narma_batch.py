@@ -23,8 +23,7 @@ if __name__ == '__main__':
     # データ生成
     dynamics = NARMA(args.order, a1=0.3, a2=0.05, a3=1.5, a4=0.1)
     data_length = args.data_length_train + args.data_length_test
-    y_init = [0] * args.order
-    u, d = dynamics.generate_data(data_length, y_init)
+    u, d = dynamics.generate_data(data_length)
 
     # 学習・テスト用情報
     train_U = u[:args.data_length_train].reshape(-1, 1)
