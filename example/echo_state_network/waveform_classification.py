@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 from argparse import ArgumentParser
 
 from dh_reservoir.echo_state_network import EchoStateNetwork
-from dh_reservoir.echo_state_network.util import Tikhonov
+from dh_reservoir.echo_state_network.optimizer import Tikhonov
 from dh_reservoir.echo_state_network.network_maker import uniform
 
 
