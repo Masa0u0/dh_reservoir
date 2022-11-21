@@ -1,0 +1,11 @@
+layer:
+  N_u: 1
+  N_y: 1
+  N_x: 50
+  input_scale: 0.2
+  fb_scale: 0.05
+  tau: 0.
+  indegree: 5.
+
+other:
+  noise_level: 0.
