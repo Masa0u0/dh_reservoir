@@ -1,8 +1,17 @@
 # dh_snnkit
 
 
-## LSMの作り方(ESNもほぼ同じ)
+## Install
+---
+```bash
+$ pip install pybind11
+$ cd dh_reservoir
+$ pip install -e .
+```
 
+
+## LSMの作り方(ESNもほぼ同じ)
+---
 - example/に移動する
 ```bash
 $ cd .../dh_snnkit/example/liquid_state_machine
