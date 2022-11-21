@@ -6,9 +6,9 @@ using namespace std;
 
 Reservoir::Reservoir(
   int num_neurons,
-  float tau,
+  double tau,
   const vector<pair<int, int>>& pairs,
-  const vector<float>& weights)
+  const vector<double>& weights)
   : num_neurons{ num_neurons }, tau{ tau }, pairs{ pairs }, weights{ weights }
 {
   reset();
@@ -16,13 +16,13 @@ Reservoir::Reservoir(
 
 void Reservoir::reset()
 {
-  x = vector<float>(num_neurons, 0.);
-  dot = vector<float>(num_neurons, 0.);
+  x = vector<double>(num_neurons, 0.);
+  dot = vector<double>(num_neurons, 0.);
 }
 
-vector<float> Reservoir::step(const vector<float>& x_in, float dt)
+vector<double> Reservoir::step(const vector<double>& x_in, double dt)
 {
-  float alpha = dt / (dt + tau);
+  double alpha = dt / (dt + tau);
 
   fill(dot.begin(), dot.end(), 0.);
   for (int i = 0; i < pairs.size(); i++)
@@ -38,7 +38,7 @@ vector<float> Reservoir::step(const vector<float>& x_in, float dt)
   return x;
 }
 
-vector<float> Reservoir::get_state()
+vector<double> Reservoir::get_state()
 {
   return x;
 }

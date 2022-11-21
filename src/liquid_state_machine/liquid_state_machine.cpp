@@ -7,28 +7,28 @@ LSMParam::LSMParam(
   int num_rsrvr,
   int num_syn_input,
   int num_syn_rsrvr,
-  float tau_m,
-  float v_th,
-  float v_rest,
-  float v_reset,
-  float i_back,
-  float i_noise_scale,
-  float r,
+  double tau_m,
+  double v_th,
+  double v_rest,
+  double v_reset,
+  double i_back,
+  double i_noise_scale,
+  double r,
   const vector<bool>& is_exc_input,
   const vector<bool>& is_exc_rsrvr,
   const vector<pair<int, int>>& pairs_input,
   const vector<pair<int, int>>& pairs_rsrvr,
-  const vector<float>& t_ref,
-  const vector<float>& tau_decay,
-  const vector<float>& tau_syn_input,
-  const vector<float>& tau_syn_rsrvr,
-  const vector<float>& tau_d,
-  const vector<float>& tau_f,
-  const vector<float>& u0,
-  const vector<float>& a_input,
-  const vector<float>& a_rsrvr,
-  const vector<float>& delay_input,
-  const vector<float>& delay_rsrvr)
+  const vector<double>& t_ref,
+  const vector<double>& tau_decay,
+  const vector<double>& tau_syn_input,
+  const vector<double>& tau_syn_rsrvr,
+  const vector<double>& tau_d,
+  const vector<double>& tau_f,
+  const vector<double>& u0,
+  const vector<double>& a_input,
+  const vector<double>& a_rsrvr,
+  const vector<double>& delay_input,
+  const vector<double>& delay_rsrvr)
   : num_input{ num_input },
     num_rsrvr{ num_rsrvr },
     num_syn_input{ num_syn_input },
@@ -66,37 +66,37 @@ LiquidStateMachine::LiquidStateMachine(const LSMParam& param, int seed = -1) : p
     seed = rnd();
   }
   mt = mt19937(seed);
-  rand1 = uniform_real_distribution<float>(-1., 1.);
+  rand1 = uniform_real_distribution<double>(-1., 1.);
 }
 
-void LiquidStateMachine::reset(const vector<float>& init_v)
+void LiquidStateMachine::reset(const vector<double>& init_v)
 {
   v = init_v;
   n_step = 0;
-  u = vector<float>(param.num_syn_rsrvr, 0.);
-  x = vector<float>(param.num_syn_rsrvr, 0.);
-  i_input = vector<float>(param.num_syn_input, 0.);
-  i_input_delayed = vector<float>(param.num_syn_input, 0.);
-  i_rsrvr = vector<float>(param.num_syn_rsrvr, 0.);
-  i_rsrvr_delayed = vector<float>(param.num_syn_rsrvr, 0.);
-  i_sum = vector<float>(param.num_rsrvr, 0.);
-  trace = vector<float>(param.num_rsrvr, 0.);
-  s_re = vector<float>(param.num_rsrvr, 0.);
-  t_last = vector<float>(param.num_rsrvr, -HUGE_VALF);
-  di_input = vector<float>(param.num_syn_input, 0.);
-  di_rsrvr = vector<float>(param.num_syn_rsrvr, 0.);
-  du = vector<float>(param.num_syn_rsrvr, 0.);
-  dx = vector<float>(param.num_syn_rsrvr, 0.);
-  dv = vector<float>(param.num_rsrvr, 0.);
-  dtrace = vector<float>(param.num_rsrvr, 0.);
+  u = vector<double>(param.num_syn_rsrvr, 0.);
+  x = vector<double>(param.num_syn_rsrvr, 0.);
+  i_input = vector<double>(param.num_syn_input, 0.);
+  i_input_delayed = vector<double>(param.num_syn_input, 0.);
+  i_rsrvr = vector<double>(param.num_syn_rsrvr, 0.);
+  i_rsrvr_delayed = vector<double>(param.num_syn_rsrvr, 0.);
+  i_sum = vector<double>(param.num_rsrvr, 0.);
+  trace = vector<double>(param.num_rsrvr, 0.);
+  s_re = vector<double>(param.num_rsrvr, 0.);
+  t_last = vector<double>(param.num_rsrvr, -HUGE_VALF);
+  di_input = vector<double>(param.num_syn_input, 0.);
+  di_rsrvr = vector<double>(param.num_syn_rsrvr, 0.);
+  du = vector<double>(param.num_syn_rsrvr, 0.);
+  dx = vector<double>(param.num_syn_rsrvr, 0.);
+  dv = vector<double>(param.num_rsrvr, 0.);
+  dtrace = vector<double>(param.num_rsrvr, 0.);
   log_flg = false;
   spike_log.clear();
 }
 
-vector<float> LiquidStateMachine::step(const vector<float>& s_in, float dt)
+vector<double> LiquidStateMachine::step(const vector<double>& s_in, double dt)
 {
   int i;
-  float delta, alpha;
+  double delta, alpha;
 
   // ステップを進める
   n_step += 1;
@@ -134,7 +134,7 @@ vector<float> LiquidStateMachine::step(const vector<float>& s_in, float dt)
   {
     if (dt * n_step > t_last[i] + param.t_ref[i])
     {
-      float i_noise = param.i_noise_scale * rand1(mt);
+      double i_noise = param.i_noise_scale * rand1(mt);
       dv[i] =
         (param.v_rest - v[i] + param.r * (i_sum[i] + param.i_back + i_noise)) * dt / param.tau_m;
     }
@@ -195,7 +195,7 @@ void LiquidStateMachine::start_log()
   log_flg = true;
 }
 
-vector<float> LiquidStateMachine::get_trace()
+vector<double> LiquidStateMachine::get_trace()
 {
   return trace;
 }

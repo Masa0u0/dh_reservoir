@@ -10,10 +10,10 @@ PYBIND11_MODULE(_liquid_state_machine, obj)
 {
   py::class_<LSMParam>(obj, "LSMParam")
     .def(py::init<
-         int, int, int, int, float, float, float, float, float, float, float, vector<bool>,
-         vector<bool>, vector<pair<int, int>>, vector<pair<int, int>>, vector<float>, vector<float>,
-         vector<float>, vector<float>, vector<float>, vector<float>, vector<float>, vector<float>,
-         vector<float>, vector<float>, vector<float>>());
+         int, int, int, int, double, double, double, double, double, double, double, vector<bool>,
+         vector<bool>, vector<pair<int, int>>, vector<pair<int, int>>, vector<double>,
+         vector<double>, vector<double>, vector<double>, vector<double>, vector<double>,
+         vector<double>, vector<double>, vector<double>, vector<double>, vector<double>>());
 
   py::class_<LiquidStateMachine>(obj, "LiquidStateMachine")
     .def(py::init<LSMParam, int>())

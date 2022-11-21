@@ -9,8 +9,8 @@ class DynamicSynapse;
 struct NeuronParams
 {
 public:
-  float tau_decay;
-  float c;
+  double tau_decay;
+  double c;
 
   NeuronParams();
 };
@@ -19,11 +19,11 @@ class BaseNeuron
 {
 protected:
   // const
-  float tau_decay;
+  double tau_decay;
 
   // mutable
   bool spike;
-  float trace, dtrace;
+  double trace, dtrace;
 
 public:
   virtual ~BaseNeuron()
@@ -38,15 +38,15 @@ public:
   {
   }
 
-  virtual void calc_grad(float dt)
+  virtual void calc_grad(double dt)
   {
   }
 
   void set_spike(bool spike);
 
-  float get_spike();
+  double get_spike();
 
-  float get_trace();
+  double get_trace();
 };
 
 class PseudoNeuron : public BaseNeuron
@@ -56,7 +56,7 @@ public:
 
   void reset() override;
 
-  void calc_grad(float dt) override;
+  void calc_grad(double dt) override;
 
   void update() override;
 };
@@ -64,10 +64,10 @@ public:
 class LIFNeuron : public BaseNeuron
 {
   // const
-  float c;
+  double c;
 
   // mutable
-  float w0, dw0, mempot;
+  double w0, dw0, mempot;
 
 public:
   std::vector<BaseNeuron*> pre_neurons;
@@ -77,9 +77,9 @@ public:
 
   void reset() override;
 
-  void calc_grad(float dt) override;
+  void calc_grad(double dt) override;
 
   void update() override;
 
-  float get_mempot();
+  double get_mempot();
 };

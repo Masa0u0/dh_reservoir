@@ -8,8 +8,8 @@
 class WTACircuit
 {
   std::mt19937 mt;
-  std::uniform_real_distribution<float> rand_01;
-  float max_fire_rate;
+  std::uniform_real_distribution<double> rand_01;
+  double max_fire_rate;
   bool stochastic;
 
 public:
@@ -17,7 +17,7 @@ public:
 
   WTACircuit(
     int num_neurons,
-    float max_fire_rate,
+    double max_fire_rate,
     bool stochastic,
     const NeuronParams& params,
     int seed);
@@ -26,9 +26,9 @@ public:
 
   void reset();
 
-  void calc_grad(float dt);
+  void calc_grad(double dt);
 
   void update();
 
-  void fire(float dt);
+  void fire(double dt);
 };

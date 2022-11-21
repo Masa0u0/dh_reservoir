@@ -1,3 +1,3 @@
 #pragma once
 
-float rbf_kernel(float x, float y, float std);
+double rbf_kernel(double x, double y, double std);

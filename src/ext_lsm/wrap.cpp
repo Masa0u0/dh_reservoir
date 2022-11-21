@@ -16,8 +16,8 @@ PYBIND11_MODULE(_ext_lsm, obj)
 
   py::class_<LiquidStateMachine>(obj, "LiquidStateMachine")
     .def(py::init<
-         vector<vector<float>>, vector<vector<float>>, NeuronParams, SynapseParams, pair<int, int>,
-         float, float, float, bool, float, int>())
+         vector<vector<double>>, vector<vector<double>>, NeuronParams, SynapseParams,
+         pair<int, int>, double, double, double, bool, double, int>())
     .def("reset", &LiquidStateMachine::reset)
     .def("step", &LiquidStateMachine::step)
     .def("get_num_input_neurons", &LiquidStateMachine::get_num_input_neurons)

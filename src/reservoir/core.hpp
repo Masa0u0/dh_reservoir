@@ -5,20 +5,20 @@
 class Reservoir
 {
   int num_neurons;
-  float tau;
+  double tau;
   std::vector<std::pair<int, int>> pairs;
-  std::vector<float> weights, x, dot;
+  std::vector<double> weights, x, dot;
 
 public:
   Reservoir(
     int num_neurons,
-    float tau,
+    double tau,
     const std::vector<std::pair<int, int>>& pairs,
-    const std::vector<float>& weights);
+    const std::vector<double>& weights);
 
   void reset();
 
-  std::vector<float> step(const std::vector<float>& x_in, float dt);
+  std::vector<double> step(const std::vector<double>& x_in, double dt);
 
-  std::vector<float> get_state();
+  std::vector<double> get_state();
 };

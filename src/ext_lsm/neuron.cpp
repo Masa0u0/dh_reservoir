@@ -24,12 +24,12 @@ void BaseNeuron::set_spike(bool spike)
   }
 }
 
-float BaseNeuron::get_spike()
+double BaseNeuron::get_spike()
 {
-  return static_cast<float>(spike);
+  return static_cast<double>(spike);
 }
 
-float BaseNeuron::get_trace()
+double BaseNeuron::get_trace()
 {
   return trace;
 }
@@ -48,7 +48,7 @@ void PseudoNeuron::reset()
   dtrace = 0.;
 }
 
-void PseudoNeuron::calc_grad(float dt)
+void PseudoNeuron::calc_grad(double dt)
 {
   dtrace = -(dt / tau_decay) * trace;
 }
@@ -76,7 +76,7 @@ void LIFNeuron::reset()
   mempot = 0.;
 }
 
-void LIFNeuron::calc_grad(float dt)
+void LIFNeuron::calc_grad(double dt)
 {
   dtrace = -(dt / tau_decay) * trace;
   dw0 = (c * exp(-w0) * get_spike() - 1.) * dt;
@@ -96,7 +96,7 @@ void LIFNeuron::update()
   // cout << "trace: " << trace << ", w0: " << w0 << ", mempot: " << mempot << endl;
 }
 
-float LIFNeuron::get_mempot()
+double LIFNeuron::get_mempot()
 {
   return mempot;
 }

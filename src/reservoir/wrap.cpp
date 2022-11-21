@@ -9,7 +9,7 @@ namespace py = pybind11;
 PYBIND11_MODULE(_reservoir, obj)
 {
   py::class_<Reservoir>(obj, "Reservoir")
-    .def(py::init<int, float, vector<pair<int, int>>, vector<float>>())
+    .def(py::init<int, double, vector<pair<int, int>>, vector<double>>())
     .def("reset", &Reservoir::reset)
     .def("step", &Reservoir::step)
     .def("get_state", &Reservoir::get_state);

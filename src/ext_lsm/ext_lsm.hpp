@@ -19,29 +19,29 @@ class LiquidStateMachine
 
 public:
   explicit LiquidStateMachine(
-    const std::vector<std::vector<float>>& pos_input,
-    const std::vector<std::vector<float>>& pos_wta,
+    const std::vector<std::vector<double>>& pos_input,
+    const std::vector<std::vector<double>>& pos_wta,
     const NeuronParams& neuron_params,
     const SynapseParams& synapse_params,
     const std::pair<int, int>& wta_neuron_nums_range,
-    float connectivity,
-    float lambda_input,
-    float lambda_rsrvr,
+    double connectivity,
+    double lambda_input,
+    double lambda_rsrvr,
     bool stochastic,
-    float fire_rate_max,
+    double fire_rate_max,
     int seed);
 
   ~LiquidStateMachine();
 
   void reset();
 
-  std::vector<float> step(const std::vector<bool>& input_spikes, float dt);
+  std::vector<double> step(const std::vector<bool>& input_spikes, double dt);
 
   int get_num_input_neurons();
 
   int get_num_rsrvr_neurons();
 
-  float input_connectivity();
+  double input_connectivity();
 
-  float rsrvr_connectivity();
+  double rsrvr_connectivity();
 };

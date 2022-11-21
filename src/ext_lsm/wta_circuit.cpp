@@ -4,14 +4,14 @@ using namespace std;
 
 WTACircuit::WTACircuit(
   int num_neurons,
-  float max_fire_rate,
+  double max_fire_rate,
   bool stochastic,
   const NeuronParams& params,
   int seed)
   : max_fire_rate{ max_fire_rate }, stochastic{ stochastic }
 {
   mt = mt19937(seed);
-  rand_01 = uniform_real_distribution<float>(0., 1.);
+  rand_01 = uniform_real_distribution<double>(0., 1.);
 
   for (int i = 0; i < num_neurons; i++)
   {
@@ -36,7 +36,7 @@ void WTACircuit::reset()
   }
 }
 
-void WTACircuit::calc_grad(float dt)
+void WTACircuit::calc_grad(double dt)
 {
   for (auto neuron : neurons)
   {
@@ -52,11 +52,11 @@ void WTACircuit::update()
   }
 }
 
-void WTACircuit::fire(float dt)
+void WTACircuit::fire(double dt)
 {
   if (stochastic)
   {
-    float sum_exp = 0.;
+    double sum_exp = 0.;
     for (auto neuron : neurons)
     {
       sum_exp += exp(neuron->get_mempot());
@@ -64,7 +64,7 @@ void WTACircuit::fire(float dt)
 
     for (auto neuron : neurons)
     {
-      float fire_prob = dt * max_fire_rate * exp(neuron->get_mempot()) / sum_exp;
+      double fire_prob = dt * max_fire_rate * exp(neuron->get_mempot()) / sum_exp;
       if (rand_01(mt) < fire_prob)
       {
         neuron->set_spike(true);
@@ -75,7 +75,7 @@ void WTACircuit::fire(float dt)
   {
     // 確率的に発火させない場合、発火率がdtやWTA内のニューロン数に依存することに注意
     int idx;
-    float max_mempot = -HUGE_VALF;
+    double max_mempot = -HUGE_VALF;
     for (int i = 0; i < neurons.size(); i++)
     {
       if (neurons[i]->get_mempot() > max_mempot)

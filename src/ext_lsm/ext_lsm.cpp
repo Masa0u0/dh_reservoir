@@ -7,16 +7,16 @@
 using namespace std;
 
 LiquidStateMachine::LiquidStateMachine(
-  const vector<vector<float>>& pos_input,
-  const vector<vector<float>>& pos_wta,
+  const vector<vector<double>>& pos_input,
+  const vector<vector<double>>& pos_wta,
   const NeuronParams& neuron_params,
   const SynapseParams& synapse_params,
   const pair<int, int>& wta_neurons_range,
-  float connectivity,
-  float lambda_input,
-  float lambda_rsrvr,
+  double connectivity,
+  double lambda_input,
+  double lambda_rsrvr,
   bool stochastic,
-  float max_fire_rate,  // stochasticがfalseならば関係ない
+  double max_fire_rate,  // stochasticがfalseならば関係ない
   int seed)
 {
   assert(pos_input.size() >= 1 && pos_wta.size() >= 1);
@@ -32,7 +32,7 @@ LiquidStateMachine::LiquidStateMachine(
   }
   mt19937 mt(seed);
   uniform_int_distribution<> seed_gen(0);
-  uniform_real_distribution<float> rand_01(0., 1.);
+  uniform_real_distribution<double> rand_01(0., 1.);
   uniform_int_distribution<> wta_neurons_gen(wta_neurons_range.first, wta_neurons_range.second);
 
   num_input_neurons = pos_input.size();
@@ -60,10 +60,10 @@ LiquidStateMachine::LiquidStateMachine(
     auto input_neuron = input_neurons[i];
     for (int j = 0; j < num_wta_circuits; j++)
     {
-      float dist = sqrt(
+      double dist = sqrt(
         pow((pos_input[i][0] - pos_wta[j][0]), 2.) + pow((pos_input[i][1] - pos_wta[j][1]), 2.)
         + pow((pos_input[i][2] - pos_wta[j][2]), 2.));
-      float prob = connectivity * exp(-pow(dist / lambda_input, 2.));
+      double prob = connectivity * exp(-pow(dist / lambda_input, 2.));
       for (auto rsrvr_neuron : wta_circuits[j]->neurons)
       {
         if (rand_01(mt) < prob)
@@ -88,10 +88,10 @@ LiquidStateMachine::LiquidStateMachine(
       {
         continue;
       }
-      float dist = sqrt(
+      double dist = sqrt(
         pow((pos_wta[i][0] - pos_wta[j][0]), 2.) + pow((pos_wta[i][1] - pos_wta[j][1]), 2.)
         + pow((pos_wta[i][2] - pos_wta[j][2]), 2.));
-      float prob = connectivity * exp(-pow(dist / lambda_rsrvr, 2.));
+      double prob = connectivity * exp(-pow(dist / lambda_rsrvr, 2.));
       for (auto neuron1 : wta_circuits[i]->neurons)
       {
         for (auto neuron2 : wta_circuits[j]->neurons)
@@ -153,7 +153,7 @@ void LiquidStateMachine::reset()
   }
 }
 
-vector<float> LiquidStateMachine::step(const vector<bool>& input_spikes, float dt)
+vector<double> LiquidStateMachine::step(const vector<bool>& input_spikes, double dt)
 {
   assert(static_cast<int>(input_spikes.size()) == num_input_neurons);
 
@@ -206,7 +206,7 @@ vector<float> LiquidStateMachine::step(const vector<bool>& input_spikes, float d
   }
 
   // リザバーニューロンのトレースを取得する
-  vector<float> rsrvr_traces;
+  vector<double> rsrvr_traces;
   for (auto wta : wta_circuits)
   {
     for (auto neuron : wta->neurons)
@@ -228,12 +228,12 @@ int LiquidStateMachine::get_num_rsrvr_neurons()
   return num_rsrvr_neurons;
 }
 
-float LiquidStateMachine::input_connectivity()
+double LiquidStateMachine::input_connectivity()
 {
-  return (float)input_synapses.size() / (float)(num_input_neurons * num_rsrvr_neurons);
+  return (double)input_synapses.size() / (double)(num_input_neurons * num_rsrvr_neurons);
 }
 
-float LiquidStateMachine::rsrvr_connectivity()
+double LiquidStateMachine::rsrvr_connectivity()
 {
-  return (float)rsrvr_synapses.size() / (float)(num_rsrvr_neurons * num_rsrvr_neurons);
+  return (double)rsrvr_synapses.size() / (double)(num_rsrvr_neurons * num_rsrvr_neurons);
 }
