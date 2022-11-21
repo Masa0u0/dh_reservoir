@@ -10,51 +10,7 @@ from argparse import ArgumentParser
 from dh_reservoir.echo_state_network import EchoStateNetwork
 from dh_reservoir.echo_state_network.optimizer import Tikhonov
 from dh_reservoir.echo_state_network.network_maker import uniform
-
-
-class SinSaw:
-    """ 正弦波とのこぎり波の混合波形生成 """
-
-    def __init__(self, freq: float, dt: float):
-        self.freq = freq
-        self.period = 1. / freq
-        self.dt = dt
-        self.period_length = int(self.period / self.dt)
-        assert self.period_length > 0
-
-    def sinusoidal(self):
-        """ 正弦波 """
-        t = np.linspace(0., self.period, self.period_length)
-        x = np.sin(2. * np.pi * self.freq * t)
-        return x
-
-    def saw_tooth(self):
-        """ のこぎり波 """
-        t = np.linspace(0., self.period, self.period_length)
-        x = 2. * (t / self.period - np.floor(t / self.period + 0.5))
-        return x
-
-    def make_output(self, label):
-        y = np.zeros((self.period_length, 2))
-        y[:, label] = 1
-        return y
-
-    def generate_data(self, label):
-        '''
-        混合波形及びラベルの出力
-        :param label: 0または1を要素に持つリスト
-        :return: u: 混合波形
-        :return: d: 2次元ラベル（正弦波[1,0], のこぎり波[0,1]）
-        '''
-        u = []
-        d = []
-        for i in label:
-            if i:
-                u += self.saw_tooth().tolist()
-            else:
-                u += self.sinusoidal().tolist()
-            d += self.make_output(i).tolist()
-        return np.array(u), np.array(d)
+from dh_reservoir.echo_state_network.data_generator import SinSaw
 
 
 class ScalingShift:
