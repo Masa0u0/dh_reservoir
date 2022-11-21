@@ -1,38 +1,34 @@
-#ifndef WTA_CIRCUIT_H
-#define WTA_CIRCUIT_H
+#pragma once
 
-using namespace std;
+#include <vector>
+#include <random>
 
+#include "neuron.hpp"
 
 class WTACircuit
 {
-    mt19937 mt;
-    uniform_real_distribution<float> rand_01;
-    float max_fire_rate;
-    bool stochastic;
+  std::mt19937 mt;
+  std::uniform_real_distribution<float> rand_01;
+  float max_fire_rate;
+  bool stochastic;
 
 public:
+  std::vector<LIFNeuron*> neurons;
 
-    vector<LIFNeuron*> neurons;
+  WTACircuit(
+    int num_neurons,
+    float max_fire_rate,
+    bool stochastic,
+    const NeuronParams& params,
+    int seed);
 
-    WTACircuit(
-        int num_neurons,
-        float max_fire_rate,
-        bool stochastic,
-        const NeuronParams& params,
-        int seed
-    );
+  ~WTACircuit();
 
-    ~WTACircuit();
+  void reset();
 
-    void reset();
+  void calc_grad(float dt);
 
-    void calc_grad(float dt);
+  void update();
 
-    void update();
-
-    void fire(float dt);
+  void fire(float dt);
 };
-
-
-#endif

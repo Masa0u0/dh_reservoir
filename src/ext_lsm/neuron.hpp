@@ -1,89 +1,85 @@
-#ifndef NEURON_H
-#define NEURON_H
+#pragma once
 
-using namespace std;
+#include <vector>
+
+#include "./synapse.hpp"
 
 class DynamicSynapse;
-
 
 struct NeuronParams
 {
 public:
+  float tau_decay;
+  float c;
 
-    float tau_decay;
-    float c;
-
-    NeuronParams();
+  NeuronParams();
 };
-
 
 class BaseNeuron
 {
 protected:
+  // const
+  float tau_decay;
 
-    // const
-    float tau_decay;
-
-    // mutable
-    bool spike;
-    float trace, dtrace;
+  // mutable
+  bool spike;
+  float trace, dtrace;
 
 public:
+  virtual ~BaseNeuron()
+  {
+  }
 
-    virtual ~BaseNeuron() { }
+  virtual void reset()
+  {
+  }
 
-    virtual void reset() { }
+  virtual void update()
+  {
+  }
 
-    virtual void update() { }
+  virtual void calc_grad(float dt)
+  {
+  }
 
-    virtual void calc_grad(float dt) { }
+  void set_spike(bool spike);
 
-    void set_spike(bool spike);
+  float get_spike();
 
-    float get_spike();
-
-    float get_trace();
-
+  float get_trace();
 };
-
 
 class PseudoNeuron : public BaseNeuron
 {
 public:
+  PseudoNeuron(const NeuronParams& params);
 
-    PseudoNeuron(const NeuronParams& params);
+  void reset() override;
 
-    void reset() override;
+  void calc_grad(float dt) override;
 
-    void calc_grad(float dt) override;
-
-    void update() override;
+  void update() override;
 };
-
 
 class LIFNeuron : public BaseNeuron
 {
-    // const
-    float c;
+  // const
+  float c;
 
-    // mutable
-    float w0, dw0, mempot;
+  // mutable
+  float w0, dw0, mempot;
 
 public:
+  std::vector<BaseNeuron*> pre_neurons;
+  std::vector<DynamicSynapse*> pre_synapses;
 
-    vector<BaseNeuron*> pre_neurons;
-    vector<DynamicSynapse*> pre_synapses;
+  LIFNeuron(const NeuronParams& params);
 
-    LIFNeuron(const NeuronParams& params);
+  void reset() override;
 
-    void reset() override;
+  void calc_grad(float dt) override;
 
-    void calc_grad(float dt) override;
+  void update() override;
 
-    void update() override;
-
-    float get_mempot();
+  float get_mempot();
 };
-
-
-#endif
