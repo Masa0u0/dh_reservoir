@@ -1,0 +1,8 @@
+build
+logs
+*.egg-info
+*.so
+*.db
+__pycache__
+lsm_pure_python.py
+test.yaml

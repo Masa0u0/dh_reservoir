@@ -1,0 +1,32 @@
+network_maker: "ponghiran2019"
+
+Encoder:
+    obs_dim: 1
+    pop_dim: 10
+    mean_range: [-1., 1.]
+    std: 0.1
+    amp: 5.5
+
+LSM:
+    num_input: 10
+    num_rsrvr: 1000
+    k: 3
+    c: 0.1
+    tau_decay_range: [0.03, 0.03]
+    a_distribution: "sc_gamma"
+    a_std_coef: 10.
+    # tau_syn_mean_dict:
+    #     ee: 0.003
+    #     ei: 0.003
+    #     ie: 0.006
+    #     ii: 0.006
+    # tau_syn_sd_dict:
+    #     ee: 0.00
+    #     ei: 0.00
+    #     ie: 0.00
+    #     ii: 0.00
+    # delay_dict:
+    #     ee: 0.00
+    #     ei: 0.00
+    #     ie: 0.00
+    #     ii: 0.00

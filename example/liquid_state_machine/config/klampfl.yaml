@@ -1,0 +1,54 @@
+network_maker: "klampfl2013"
+
+Encoder:
+    obs_dim: 8
+    pop_dim: 10
+    mean_range: [-1., 1.]
+    std: 0.1
+    amp: 5.5
+
+LSM:
+    num_input: 80
+    num_wta: 200
+    wta_neurons_range: [2, 6]
+    k: 2.
+    lam: 0.005
+    i_noise_scale: 0.
+    tau_decay_range: [0.1, 0.1]
+    a_distribution: "sc_lognormal"
+    a_std_coef: 10.
+    tau_syn_mean_dict:
+        ee: 0.003
+        ei: 0.003
+        ie: 0.006
+        ii: 0.006
+    tau_syn_sd_dict:
+        ee: 0.0
+        ei: 0.0
+        ie: 0.0
+        ii: 0.0
+    # delay_dict:
+    #     ee: 0.00
+    #     ei: 0.00
+    #     ie: 0.00
+    #     ii: 0.00
+    # tau_d_mean_dict:
+    #     ee: 0.11
+    #     ei: 0.0125
+    #     ie: 0.07
+    #     ii: 0.0144
+    # tau_d_sd_dict:
+    #     ee: 0.055
+    #     ei: 0.00625
+    #     ie: 0.035
+    #     ii: 0.0072
+    # tau_f_mean_dict:
+    #     ee: 0.005
+    #     ei: 0.12
+    #     ie: 0.002
+    #     ii: 0.006
+    # tau_f_sd_dict:
+    #     ee: 0.0025
+    #     ei: 0.06
+    #     ie: 0.001
+    #     ii: 0.003

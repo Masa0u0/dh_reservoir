@@ -1,0 +1,26 @@
+network_maker: "klampfl2013"
+
+Encoder:
+    obs_dim: 8
+    pop_dim: 10
+    mean_range: [-1., 1.]
+    std: 0.1
+
+LSM:
+    num_input: 80
+    num_wta: 200
+    wta_neurons_range: [2, 6]
+    lam: 0.005
+    i_noise_scale: 0.
+    a_distribution: "sc_lognormal"
+    a_std_coef: 10.
+    tau_syn_mean_dict:
+        ee: 0.003
+        ei: 0.003
+        ie: 0.006
+        ii: 0.006
+    tau_syn_sd_dict:
+        ee: 0.0
+        ei: 0.0
+        ie: 0.0
+        ii: 0.0
