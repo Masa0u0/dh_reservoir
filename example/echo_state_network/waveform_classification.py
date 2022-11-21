@@ -80,10 +80,10 @@ class ScalingShift:
 if __name__ == '__main__':
     parser = ArgumentParser()
     parser.add_argument("--dt", type=float, default=1e-3)
-    parser.add_argument('--n_wave_train', type=int, default=10)
-    parser.add_argument('--n_wave_test', type=int, default=5)
-    parser.add_argument('--n_wave_plot', type=int, default=5)
-    parser.add_argument("--freq", type=float, default=1.)
+    parser.add_argument('--n_wave_train', type=int, default=60)
+    parser.add_argument('--n_wave_test', type=int, default=40)
+    parser.add_argument('--n_wave_plot', type=int, default=10)
+    parser.add_argument("--freq", type=float, default=10.)
     parser.add_argument('--seed', type=int)
     parser.add_argument('--config', type=str)
     parser.add_argument('--load_path', type=str)
@@ -103,6 +103,7 @@ if __name__ == '__main__':
     label = np.random.choice(2, args.n_wave_train + args.n_wave_test)
     u, d = dynamics.generate_data(label)
     T = dynamics.period_length * args.n_wave_train
+    print(f'T: {T}')
 
     # 訓練・検証用情報
     train_U = u[:T].reshape(-1, 1)

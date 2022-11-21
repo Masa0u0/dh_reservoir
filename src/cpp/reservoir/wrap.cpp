@@ -8,9 +8,11 @@ namespace py = pybind11;
 
 PYBIND11_MODULE(_reservoir, obj)
 {
+  py::class_<Edge>(obj, "Edge").def(py::init<int, int, double>());
+
   py::class_<Reservoir>(obj, "Reservoir")
-    .def(py::init<int, double, vector<pair<int, int>>, vector<double>>())
+    .def(py::init<int, double, const vector<Edge>&>())
     .def("reset", &Reservoir::reset)
     .def("step", &Reservoir::step)
-    .def("get_state", &Reservoir::get_state);
+    .def("get_state", &Reservoir::getState);
 }

@@ -5,7 +5,7 @@ import networkx as nx
 from typing import Tuple
 
 from ..layer import Input, Output, Feedback, Reservoir
-from .util import conmat2pairs
+from .util import edges_from_weight_matrix
 
 
 def uniform(
@@ -58,7 +58,8 @@ def uniform(
     W_rsrvr *= rho / sp_radius
 
     # 非ゼロ要素のみ抽出
-    pairs, weights = conmat2pairs(W_rsrvr)
-    rsrvr = Reservoir(N_x, tau, pairs, weights)
+    edges = edges_from_weight_matrix(W_rsrvr)
+
+    rsrvr = Reservoir(N_x, tau, edges)
 
     return input_, output, feedback, rsrvr

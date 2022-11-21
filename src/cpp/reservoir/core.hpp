@@ -2,23 +2,28 @@
 
 #include <vector>
 
+struct Edge
+{
+  int from;
+  int to;
+  double weight;
+};
+
 class Reservoir
 {
-  int num_neurons;
-  double tau;
-  std::vector<std::pair<int, int>> pairs;
-  std::vector<double> weights, x, dot;
-
 public:
-  Reservoir(
-    int num_neurons,
-    double tau,
-    const std::vector<std::pair<int, int>>& pairs,
-    const std::vector<double>& weights);
+  Reservoir(int num_neurons, double tau, const std::vector<Edge>& edges);
 
   void reset();
 
-  std::vector<double> step(const std::vector<double>& x_in, double dt);
+  const std::vector<double>& step(const std::vector<double>& x_in, double dt);
 
-  std::vector<double> get_state();
+  const std::vector<double>& getState();
+
+private:
+  const int num_neurons_;
+  const double tau_;
+  const std::vector<Edge> edges_;
+  std::vector<double> x_;
+  std::vector<double> dot_;
 };

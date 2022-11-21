@@ -1,7 +1,9 @@
 import numpy as np
 from numpy.typing import NDArray
+from typing import List
 
 from _reservoir import Reservoir as _Reservoir
+from _reservoir import Edge
 
 
 class Input:
@@ -49,16 +51,15 @@ class Feedback:
 
 class Reservoir(_Reservoir):
 
-    def __init__(self, N_x: int, tau: float, pairs: NDArray, weights: NDArray):
+    def __init__(self, N_x: int, tau: float, edges: List[Edge]):
         self.N_x = N_x
         self.tau = tau
-        self.pairs = pairs
-        self.weights = weights
-        super().__init__(N_x, tau, pairs, weights)
+        self.edges = edges
+        super().__init__(N_x, tau, edges)
 
     def step(self, x_in: NDArray, dt: float) -> NDArray:
         assert x_in.shape == (self.N_x,)
-        assert 0 < dt < self.tau
+        assert dt > 0., f'dt = {dt}'
         return np.array(super().step(x_in, dt))
 
     def reset(self) -> None:
@@ -71,6 +72,5 @@ class Reservoir(_Reservoir):
         return {
             'N_x': self.N_x,
             'tau': self.tau,
-            'pairs': self.pairs,
-            'weights': self.weights,
+            'edges': self.edges,
         }

@@ -124,12 +124,12 @@ if __name__ == "__main__":
     pred_test = model.predict(X_test)
 
     # 平方平均二乗誤差
-    print(f'Train RMSE: {root_mean_squared_error(y_train, pred_train)}')
-    print(f'Test RMSE: {root_mean_squared_error(y_test, pred_test)}')
+    print(f'Train RMSE: {root_mean_squared_error(y_train, pred_train):.3f}')
+    print(f'Test RMSE: {root_mean_squared_error(y_test, pred_test):.3f}')
 
     # 決定係数
-    print(f'Train R2: {r2_score(y_train, pred_train)}')
-    print(f'Test R2: {r2_score(y_test, pred_test)}')
+    print(f'Train R2: {r2_score(y_train, pred_train):.3f}')
+    print(f'Test R2: {r2_score(y_test, pred_test):.3f}')
 
     # モデル保存
     if args.save_dir:
