@@ -1,4 +1,5 @@
 import numpy as np
+from numpy.typing import NDArray
 
 from _ext_lsm import LiquidStateMachine as _LiquidStateMachine
 from _ext_lsm import NeuronParams as _NeuronParams
@@ -73,7 +74,7 @@ class LiquidStateMachine(_LiquidStateMachine):
     def reset(self) -> None:
         super().reset()
 
-    def step(self, input_spikes: np.ndarray, dt: float) -> np.ndarray:
+    def step(self, input_spikes: NDArray, dt: float) -> NDArray:
         rsrvr_traces = np.array(super().step(input_spikes, dt))
         return rsrvr_traces
 

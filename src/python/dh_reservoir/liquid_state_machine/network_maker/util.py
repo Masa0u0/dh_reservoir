@@ -1,11 +1,12 @@
 import numpy as np
 import numpy.random as rnd
+from numpy.typing import NDArray
 from typing import Dict, List
 
 from dh_function.random import sc_normal, sc_lognormal, sc_gamma
 
 
-def conmat2pairs(conmat: np.ndarray) -> np.ndarray:
+def conmat2pairs(conmat: NDArray) -> NDArray:
     assert conmat.ndim == 2
     pairs = []
     for i in range(0, conmat.shape[0]):
@@ -15,7 +16,7 @@ def conmat2pairs(conmat: np.ndarray) -> np.ndarray:
     return np.array(pairs, dtype=int)
 
 
-def set_syn_type(pairs, is_exc1: np.ndarray, is_exc2: np.ndarray) -> List[str]:
+def set_syn_type(pairs, is_exc1: NDArray, is_exc2: NDArray) -> List[str]:
     n_syn = pairs.shape[0]
     syn_type = [None] * n_syn
     for i, (pre, post) in enumerate(pairs):
@@ -36,7 +37,7 @@ def sample_syn_params(
     sd_dict: Dict[str, float],
     distribution: str,
     std_coef: float,
-) -> np.ndarray:
+) -> NDArray:
     num_syn = len(syn_type)
     res = np.empty((num_syn,))
     for i in range(0, num_syn):

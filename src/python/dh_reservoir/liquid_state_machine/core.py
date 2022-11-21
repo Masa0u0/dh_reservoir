@@ -2,6 +2,7 @@ import pickle
 import numpy as np
 import numpy.linalg as LA
 import numpy.random as rnd
+from numpy.typing import NDArray
 from matplotlib import pyplot as plt
 from matplotlib import patches
 from rich import print
@@ -32,17 +33,17 @@ class LSMParam:
         is_exc_rsrvr: List[bool],
         pairs_input: List[Tuple[int, int]],
         pairs_rsrvr: List[Tuple[int, int]],
-        t_ref: np.ndarray,
-        tau_decay: np.ndarray,
-        tau_syn_input: np.ndarray,
-        tau_syn_rsrvr: np.ndarray,
-        tau_d: np.ndarray,
-        tau_f: np.ndarray,
-        u0: np.ndarray,
-        a_input: np.ndarray,
-        a_rsrvr: np.ndarray,
-        delay_input: np.ndarray,
-        delay_rsrvr: np.ndarray,
+        t_ref: NDArray,
+        tau_decay: NDArray,
+        tau_syn_input: NDArray,
+        tau_syn_rsrvr: NDArray,
+        tau_d: NDArray,
+        tau_f: NDArray,
+        u0: NDArray,
+        a_input: NDArray,
+        a_rsrvr: NDArray,
+        delay_input: NDArray,
+        delay_rsrvr: NDArray,
     ) -> None:
         self.num_input = num_input
         self.num_rsrvr = num_rsrvr
@@ -175,17 +176,17 @@ class LiquidStateMachine(_LiquidStateMachine):
         # init_v = np.full((self.num_rsrvr,), self._param.v_reset)
         super().reset(init_v)
 
-    def step(self, input_spikes: np.ndarray, dt: float) -> np.ndarray:
+    def step(self, input_spikes: NDArray, dt: float) -> NDArray:
         """
         dtだけシミュレートする
 
         Parameters
         ----------
-        input_spikes: np.ndarray
+        input_spikes: NDArray
 
         Returns
         ----------
-        rsrvr_traces: np.ndarray
+        rsrvr_traces: NDArray
         """
         assert input_spikes.shape == (self._param.num_input,)
         rsrvr_traces = np.array(super().step(input_spikes, dt))
@@ -209,14 +210,14 @@ class LiquidStateMachine(_LiquidStateMachine):
         connection_rate = num_connected_pairs / num_total_pairs
         return connection_rate
 
-    def _make_synapse_strength_matrix(self) -> np.ndarray:
+    def _make_synapse_strength_matrix(self) -> NDArray:
         w = self._param.tau_syn_rsrvr * self._param.a_rsrvr
         w_mat = np.zeros((self._param.num_rsrvr, self._param.num_rsrvr))
         for i, (pre, post) in enumerate(self._param.pairs_rsrvr):
             w_mat[pre, post] = w[i]
         return w_mat
 
-    def _calc_eig(self) -> np.ndarray:
+    def _calc_eig(self) -> NDArray:
         w_mat = self._make_synapse_strength_matrix()
         eig, _ = LA.eig(w_mat)
         return eig
@@ -336,7 +337,7 @@ class LiquidStateMachine(_LiquidStateMachine):
         return self._param.num_rsrvr
 
     @property
-    def tau_decay(self) -> np.ndarray:
+    def tau_decay(self) -> NDArray:
         return self._param.tau_decay
 
     @property
@@ -348,7 +349,7 @@ class LiquidStateMachine(_LiquidStateMachine):
         return self._param.num_syn_rsrvr / (self._param.num_rsrvr**2)
 
     @property
-    def rsrvr_trace(self) -> np.ndarray:
+    def rsrvr_trace(self) -> NDArray:
         return np.array(super().get_trace())
 
     @property

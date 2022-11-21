@@ -1,7 +1,8 @@
 import numpy as np
+from numpy.typing import NDArray
 
 
-def conmat2pairs(conmat: np.ndarray) -> np.ndarray:
+def conmat2pairs(conmat: NDArray) -> NDArray:
     assert conmat.ndim == 2
 
     pairs = []

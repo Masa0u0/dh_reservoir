@@ -1,6 +1,7 @@
 import pickle
 import json
 import numpy as np
+from numpy.typing import NDArray
 from typing import Tuple
 
 from _encoder import PoissonEncoder as _PoissonEncoder
@@ -13,7 +14,7 @@ class PoissonEncoder(_PoissonEncoder):
     def __init__(self, obs_dim: int, max_freq: float = 30.) -> None:
         super().__init__(obs_dim, max_freq)
 
-    def encode(self, obs: np.ndarray, dt: float) -> np.ndarray:
+    def encode(self, obs: NDArray, dt: float) -> NDArray:
         return np.array(super().encode(obs, dt))
 
 
@@ -31,7 +32,7 @@ class PopSANEncoder(_PopSANEncoder):
     ) -> None:
         super().__init__(obs_dim, pop_dim, spike_ts, std, v_reset, v_th, mean_range)
 
-    def encode(self, obs: np.ndarray) -> np.ndarray:
+    def encode(self, obs: NDArray) -> NDArray:
         return np.array(super().encode(obs))
 
 
@@ -130,20 +131,20 @@ class LIFEncoder(_LIFEncoder):
         )
         self.reset()
 
-    def encode(self, obs: np.ndarray, dt: float) -> np.ndarray:
+    def encode(self, obs: NDArray, dt: float) -> NDArray:
         """
         アナログデータをスパイクにエンコードする
 
         Parameters
         ----------
-        obs: np.ndarray
+        obs: NDArray
             アナログ入力(なるべく[-1, 1]の範囲内にあるのが望ましい)
         dt: float
             前回のエンコーディングからの経過時間
 
         Returns
         ----------
-        spikes: np.ndarray
+        spikes: NDArray
             その時点のスパイク(0, 1)を記録した配列
         """
         assert obs.shape == (self.obs_dim,)
