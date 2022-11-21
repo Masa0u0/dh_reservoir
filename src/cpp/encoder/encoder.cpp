@@ -6,7 +6,7 @@
 
 using namespace std;
 
-PoissonEncoder::PoissonEncoder(int obs_dim, float max_freq)
+PoissonEncoder::PoissonEncoder(int obs_dim, double max_freq)
   : obs_dim{ obs_dim }, max_freq{ max_freq }
 {
   assert(obs_dim >= 1);
@@ -14,14 +14,14 @@ PoissonEncoder::PoissonEncoder(int obs_dim, float max_freq)
 
   random_device rnd;
   mt = mt19937(rnd());
-  rand_01 = uniform_real_distribution<float>(0., 1.);
+  rand_01 = uniform_real_distribution<double>(0., 1.);
 }
 
-vector<float> PoissonEncoder::encode(const vector<float>& obs, float dt)
+vector<double> PoissonEncoder::encode(const vector<double>& obs, double dt)
 {
   assert(static_cast<int>(obs.size()) == obs_dim);
-  float c = max_freq * dt;
-  vector<float> res(obs_dim, 0.);
+  double c = max_freq * dt;
+  vector<double> res(obs_dim, 0.);
   for (int i = 0; i < obs_dim; i++)
   {
     assert(0. <= obs[i] && obs[i] <= 1.);
@@ -37,10 +37,10 @@ PopSANEncoder::PopSANEncoder(
   int obs_dim,
   int pop_dim,
   int spike_ts,
-  float std,
-  float v_reset,
-  float v_th,
-  const pair<float, float>& mean_range)
+  double std,
+  double v_reset,
+  double v_th,
+  const pair<double, double>& mean_range)
   : obs_dim{ obs_dim },
     pop_dim{ pop_dim },
     spike_ts{ spike_ts },
@@ -49,17 +49,17 @@ PopSANEncoder::PopSANEncoder(
     v_th{ v_th }
 {
   encoder_neuron_dim = obs_dim * pop_dim;
-  mean = vector<float>(pop_dim);
-  float delta_mean = (mean_range.second - mean_range.first) / (float)(pop_dim - 1);
+  mean = vector<double>(pop_dim);
+  double delta_mean = (mean_range.second - mean_range.first) / (double)(pop_dim - 1);
   for (int i = 0; i < pop_dim; i++)
   {
     mean[i] = mean_range.first + delta_mean * i;
   }
 }
 
-vector<vector<float>> PopSANEncoder::encode(const vector<float>& obs)
+vector<vector<double>> PopSANEncoder::encode(const vector<double>& obs)
 {
-  vector<float> pop_act(encoder_neuron_dim);
+  vector<double> pop_act(encoder_neuron_dim);
   for (int i = 0; i < obs_dim; i++)
   {
     for (int j = 0; j < pop_dim; j++)
@@ -68,8 +68,8 @@ vector<vector<float>> PopSANEncoder::encode(const vector<float>& obs)
     }
   }
 
-  vector<float> pop_volt(encoder_neuron_dim, 0.);
-  vector<vector<float>> pop_spikes(encoder_neuron_dim, vector<float>(spike_ts, 0.));
+  vector<double> pop_volt(encoder_neuron_dim, 0.);
+  vector<vector<double>> pop_spikes(encoder_neuron_dim, vector<double>(spike_ts, 0.));
 
   for (int step = 0; step < spike_ts; step++)
   {
@@ -90,13 +90,13 @@ vector<vector<float>> PopSANEncoder::encode(const vector<float>& obs)
 LIFEncoder::LIFEncoder(
   int obs_dim,
   int pop_dim,
-  const pair<float, float>& mean_range,
-  float std,
-  float v_rest,
-  float v_reset,
-  float v_th,
-  float tau_m,
-  float amp)
+  const pair<double, double>& mean_range,
+  double std,
+  double v_rest,
+  double v_reset,
+  double v_th,
+  double tau_m,
+  double amp)
   : obs_dim{ obs_dim },
     pop_dim{ pop_dim },
     std{ std },
@@ -107,22 +107,22 @@ LIFEncoder::LIFEncoder(
     amp{ amp }
 {
   encoder_neuron_dim = obs_dim * pop_dim;
-  mean = vector<float>(pop_dim);
-  float delta_mean = (mean_range.second - mean_range.first) / (float)(pop_dim - 1);
+  mean = vector<double>(pop_dim);
+  double delta_mean = (mean_range.second - mean_range.first) / (double)(pop_dim - 1);
   for (int i = 0; i < pop_dim; i++)
   {
     mean[i] = mean_range.first + delta_mean * i;
   }
 }
 
-vector<float> LIFEncoder::encode(const vector<float>& obs, float dt)
+vector<double> LIFEncoder::encode(const vector<double>& obs, double dt)
 {
   if (dt >= tau_m)
   {
     throw invalid_argument("dt must be lower than the membrane time constant");
   }
 
-  vector<float> pop_act(encoder_neuron_dim);
+  vector<double> pop_act(encoder_neuron_dim);
   for (int i = 0; i < obs_dim; i++)
   {
     for (int j = 0; j < pop_dim; j++)
@@ -148,8 +148,8 @@ vector<float> LIFEncoder::encode(const vector<float>& obs, float dt)
   return pop_spikes;
 }
 
-void LIFEncoder::reset(const vector<float>& init_v)
+void LIFEncoder::reset(const vector<double>& init_v)
 {
   pop_volt = init_v;
-  pop_spikes = vector<float>(encoder_neuron_dim, 0.);
+  pop_spikes = vector<double>(encoder_neuron_dim, 0.);
 }
